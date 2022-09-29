@@ -4,7 +4,7 @@ namespace App\FormValidators;
 
 use App\Redirect;
 use App\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Services\UserService;
 
 /**
  * Validates received parameters in register action
@@ -13,7 +13,8 @@ class RegisterValidator
 {
     public function __construct(
         private Request $request,
-        private Redirect $redirect
+        private Redirect $redirect,
+        private UserService $userService
     ) {
     }
 
@@ -29,6 +30,9 @@ class RegisterValidator
 
         if (empty($params->username)) {
             $errorMessages[] = "Username is required";
+        }
+        if($this->userService->existsUsername($params->username)){
+            $errorMessages[]="Username is already in use";
         }
         if (empty($params->phone)) {
             $errorMessages[] = "Phone is required";

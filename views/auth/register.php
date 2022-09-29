@@ -41,10 +41,10 @@
             endif;
             ?>
             <p class="login-box-msg">Fill the form to register as user</p>
-            <form action="/register?foo=bar" method="post">
+            <form action="/register" method="post">
                 <div class="input-group mb-3">
                     <input type="text" name="username" class="form-control" placeholder="Username"
-                           value="<?= isset($_SESSION["inputParams"]["username"]) ? $_SESSION["inputParams"]["username"] : "" ?>"/>
+                           value="<?= $_SESSION["inputParams"]->username ?? "" ?>"/>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="input-group mb-3">
                     <input type="text" name="phone" class="form-control" placeholder="Phone"
-                           value="<?= isset($_SESSION["inputParams"]["phone"]) ? $_SESSION["inputParams"]["phone"] : "" ?>"/>
+                           value="<?= $_SESSION["inputParams"]->phone ?? "" ?>"/>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-phone"></span>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="input-group mb-3">
                     <input type="email" name="email" class="form-control" placeholder="Email"
-                           value="<?= isset($_SESSION["inputParams"]["email"]) ? $_SESSION["inputParams"]["email"] : "" ?>"/>
+                           value="<?= isset($_SESSION["inputParams"]->email) ? $_SESSION["inputParams"]->email : "" ?>"/>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>

@@ -20,7 +20,7 @@ class Redirect
      */
     public function back(array $errorMessages = []): void
     {
-        $_SESSION["inputParams"] = $this->request->getRequest();
+        $_SESSION["inputParams"] = (array)($this->request->getRequest());
         $_SESSION["errorMessages"] = $errorMessages;
         header("location: " . $_SERVER["HTTP_REFERER"]);
     }
