@@ -3,7 +3,7 @@
 namespace App\Factories;
 
 use DI;
-use Router\Router;
+use App\Router;
 
 class RouterFactory
 {
