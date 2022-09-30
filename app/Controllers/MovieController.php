@@ -69,7 +69,9 @@ class MovieController
         if (!empty($params->sort)) {
             $sortParamArray = explode("-", $params->sort);
             for ($i = 0; $i < count($sortParamArray); $i = $i + 2) {
-                $sortParams[$sortParamArray[$i]] = $sortParamArray[$i + 1];
+                if(!isset($sortParams[$sortParamArray[$i]])) {
+                    $sortParams[$sortParamArray[$i]] = $sortParamArray[$i + 1];
+                }
             }
             $movies = $this->movieService->sort($movies, $sortParams);
         }
