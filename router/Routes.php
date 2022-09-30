@@ -13,6 +13,8 @@ class Routes
     {
         $router = RouterFactory::create();
 
+        $router->get("/", [MovieController::class, "index"]);
+
         $router->get("/login", [AuthController::class, "index"])
             ->post("/login", [AuthController::class, "login"])
             ->get("/logout", [AuthController::class, "logout"])
