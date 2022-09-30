@@ -23,7 +23,7 @@ class MovieService
      * @throws \App\Exceptions\ApiReadException
      * @throws \Exceptions\WriteFileException
      */
-    public function updateList(string $category): void
+    public function updateList(string $category): MovieCollection
     {
         //get movies from API
         $apiMovies = $this->api->getMovies($category);
@@ -45,6 +45,8 @@ class MovieService
 
         //Saves data in storage
         $this->movieRepository->saveCollection($movieCollection, $category);
+
+        return $movieCollection;
     }
 
     /**

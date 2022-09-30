@@ -16,7 +16,6 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="/public/dist/css/adminlte.min.css">
     <!-- Page specific css -->
-    <style rel="stylesheet" href="/public/css/movie/index.css"></style>
 
 </head>
 <body class="hold-transition sidebar-mini">

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Redirect;
 use App\Request;
+use App\Response;
 use App\Services\MovieService;
 use App\View;
 use Exception;
@@ -13,6 +14,7 @@ class MovieController
     public function __construct(
         private Request $request,
         private Redirect $redirect,
+        private Response $response,
         private MovieService $movieService
     ) {
         if (empty($_SESSION["loggedUser"])) {
@@ -26,29 +28,23 @@ class MovieController
      * @return void
      * @throws Exception
      */
-    public function index()
+    public function index(): void
     {
-        $params = $this->request->getRequest();
-
-        $movies = isset($params->category) ? $this->movieService->getCategoryMovies($params->category) : [];
-
-        return View::make("movie/index", [
-            "movies" => $movies,
-        ])->render();
+        View::make("movie/index")->render();
     }
 
     /**
-     * Get movies and updates movie list data
+     * Gets movies and updates movie list data
      * @return void
      * @throws \App\Exceptions\ApiReadException
      * @throws \Exceptions\WriteFileException
      */
-    public function update()
+    public function update(): void
     {
         $params = $this->request->getRequest();
 
         $movies = $this->movieService->updateList($params->category);
 
-        $this->redirect->route("/movies?category=" . $params->category);
+        $this->response->json($movies->getMovies());
     }
 }

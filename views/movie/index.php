@@ -18,21 +18,19 @@ require_once dirname(__DIR__, 1) . "/layouts/header.php";
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4 offset-md-8">
-                            <form action="/movies/list/update" method="post">
-                                <div class="input-group">
-                                    <input id="categoryInput" name="category" class="form-control"
-                                           placeholder="Category"/>
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-info">
-                                            Update Movie List
-                                        </button>
-                                    </div>
+                            <div class="input-group">
+                                <input id="categoryInput" name="category" class="form-control"
+                                       placeholder="Category"/>
+                                <div class="input-group-append">
+                                    <button onclick="updateMovieList()" type="button" class="btn btn-info">
+                                        Update Movie List
+                                    </button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-5">
-                        <table class="table table-striped">
+                        <table id="movies" class="table table-striped">
                             <thead>
                             <tr>
                                 <th>Title</th>
@@ -42,20 +40,6 @@ require_once dirname(__DIR__, 1) . "/layouts/header.php";
                             </tr>
                             </thead>
                             <tbody>
-                            <?php
-                            foreach ($movies as $movie): ?>
-                                <tr>
-                                    <td><?= $movie->getTitle() ?></td>
-                                    <td><?= $movie->getYear() ?></td>
-                                    <td><?= $movie->getType() ?></td>
-                                    <td>
-                                        <a href="<?= $movie->getPoster() ?>" target="_blank">
-                                            <img src="<?= $movie->getPoster() ?>" height="50">
-                                        </a>
-                                    </td>
-                                </tr>
-                            <?php
-                            endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -64,6 +48,7 @@ require_once dirname(__DIR__, 1) . "/layouts/header.php";
         </div>
     </section>
 </div>
+<script src="/public/js/movie/index.js"></script>
 <?php
 
 require_once dirname(__DIR__, 1) . "/layouts/footer.php";
