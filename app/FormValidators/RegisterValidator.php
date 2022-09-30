@@ -2,9 +2,12 @@
 
 namespace App\FormValidators;
 
+use App\FormValidators\Parameters\EmailValidator;
+use App\FormValidators\Parameters\PasswordValidator;
+use App\FormValidators\Parameters\PhoneValidator;
+use App\FormValidators\Parameters\UsernameValidator;
 use App\Redirect;
 use App\Request;
-use App\Services\UserService;
 
 /**
  * Validates received parameters in register action
@@ -14,7 +17,10 @@ class RegisterValidator
     public function __construct(
         private Request $request,
         private Redirect $redirect,
-        private UserService $userService
+        private EmailValidator $emailValidator,
+        private PasswordValidator $passwordValidator,
+        private PhoneValidator $phoneValidator,
+        private UsernameValidator $usernameValidator
     ) {
     }
 
@@ -28,31 +34,37 @@ class RegisterValidator
     {
         $params = $this->request->getRequest();
 
-        if (empty($params->username)) {
-            $errorMessages[] = "Username is required";
+        $errorMessages = [];
+
+        $validation = true;
+
+        $rules = ["required", "only_letters"];
+        if (!$this->usernameValidator->validate($params->username, $rules, $errorMessages)) {
+            $validation = false;
         }
-        if($this->userService->existsUsername($params->username)){
-            $errorMessages[]="Username is already in use";
+
+        $rules = ["required", "email"];
+        if (!$this->emailValidator->validate($params->email, $rules, $errorMessages)) {
+            $validation = false;
         }
-        if (empty($params->phone)) {
-            $errorMessages[] = "Phone is required";
+
+        $rules = ["required", "plus_numeric", "length:9"];
+        if (!$this->phoneValidator->validate($params->phone, $rules, $errorMessages)) {
+            $validation = false;
         }
-        if (empty($params->email)) {
-            $errorMessages[] = "Email is required";
+
+        $rules = [
+            "required",
+            "length:6",
+            "uppercase:1|1",
+            "special_characters:*|-|.",
+            "equal_to:" . $params->retype_password
+        ];
+        if (!$this->passwordValidator->validate($params->password, $rules, $errorMessages)) {
+            $validation = false;
         }
-        if (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $params->email)) {
-            $errorMessages[] = "Email has incorrect format";
-        }
-        if (empty($params->password)) {
-            $errorMessages[] = "Password is required";
-        }
-        if (empty($params->retype_password)) {
-            $errorMessages[] = "Retype password is required";
-        }
-        if ($params->password != $params->retype_password) {
-            $errorMessages[] = "Passwords are different";
-        }
-        if (!empty($errorMessages)) {
+
+        if (!$validation) {
             $this->redirect->back($errorMessages);
             die;
         }
