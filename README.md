@@ -37,10 +37,11 @@ Again, replace text in curly brackets for desired name
 docker exec -ti {{container_name}} bash
 ```
 
-2) Move to html location.
+2) Move to html location. If there is any file besides "." and ".." remove it.
 
 ``` sh
 cd /var/www/html
+rm -rf *
 ```
 
 3) Clone the repository.
