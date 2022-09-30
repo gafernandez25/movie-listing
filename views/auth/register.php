@@ -92,6 +92,9 @@
                     <div class="col-12 text-center mt-2">
                         <button type="submit" class="btn btn-primary btn-block">Register</button>
                     </div>
+                    <div class="col-12 text-center mt-2">
+                        <a href="/login">Log in</a>
+                    </div>
                 </div>
             </form>
         </div>

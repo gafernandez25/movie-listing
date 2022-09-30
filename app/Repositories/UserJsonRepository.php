@@ -66,9 +66,11 @@ class UserJsonRepository implements UserRepositoryInterface
     {
         $users = $this->users();
 
-        $filter = array_filter($users, function ($user) use ($username) {
-            return $user["username"] == $username;
-        });
+        $filter = array_values(
+            array_filter($users, function ($user) use ($username) {
+                return $user["username"] == $username;
+            })
+        );
 
         return !empty($filter) ? $this->userDTO->parseUser($filter[0]) : null;
     }

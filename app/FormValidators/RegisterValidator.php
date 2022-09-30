@@ -8,6 +8,7 @@ use App\FormValidators\Parameters\PhoneValidator;
 use App\FormValidators\Parameters\UsernameValidator;
 use App\Redirect;
 use App\Request;
+use App\Services\UserService;
 
 /**
  * Validates received parameters in register action
@@ -20,7 +21,8 @@ class RegisterValidator
         private EmailValidator $emailValidator,
         private PasswordValidator $passwordValidator,
         private PhoneValidator $phoneValidator,
-        private UsernameValidator $usernameValidator
+        private UsernameValidator $usernameValidator,
+        private UserService $userService
     ) {
     }
 
@@ -40,6 +42,10 @@ class RegisterValidator
 
         $rules = ["required", "only_letters"];
         if (!$this->usernameValidator->validate($params->username, $rules, $errorMessages)) {
+            $validation = false;
+        }
+        if ($this->userService->existsUsername($params->username)) {
+            $errorMessages[] = "Username is already used";
             $validation = false;
         }
 
