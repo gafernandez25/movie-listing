@@ -57,9 +57,51 @@ class MovieService
      */
     public function getCategoryMovies(string $category): MovieCollection
     {
-        $movies = $this->movieRepository->getCategoryMovies($category);
+        return $this->buildCollection($this->movieRepository->getCategoryMovies($category));
+    }
 
-        //Build the collection
+    /**
+     * Search movies based on category, title and year range
+     * @param string $category
+     * @param string|null $title
+     * @param string|null $yearFrom
+     * @param string|null $yearUntil
+     * @return MovieCollection
+     * @throws \Exceptions\ReadFileException
+     */
+    public function searchMovies(
+        string $category,
+        ?string $title = null,
+        ?string $yearFrom = null,
+        ?string $yearUntil = null,
+    ): MovieCollection {
+        $movies = $this->buildCollection($this->movieRepository->getCategoryMovies($category));
+
+        $filteredMovieCollection = new MovieCollection();
+
+        foreach ($movies as $movie) {
+            if ($title && !str_contains(strtolower($movie->getTitle()), strtolower($title))) {
+                continue;
+            }
+            if ($yearFrom && $movie->getYear() < $yearFrom) {
+                continue;
+            }
+            if ($yearUntil && $movie->getYear() > $yearUntil) {
+                continue;
+            }
+            $filteredMovieCollection->addMovie($movie);
+        }
+
+        return $filteredMovieCollection;
+    }
+
+    /**
+     * Builds Collection with associative array
+     * @param array $movies
+     * @return MovieCollection
+     */
+    private function buildCollection(array $movies)
+    {
         $movieCollection = new MovieCollection();
         foreach ($movies as $movie) {
             $movieCollection->addMovie(
@@ -75,5 +117,4 @@ class MovieService
 
         return $movieCollection;
     }
-
 }

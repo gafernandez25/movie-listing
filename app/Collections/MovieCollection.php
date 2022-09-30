@@ -13,11 +13,7 @@ class MovieCollection implements \IteratorAggregate
      * List of movies
      * @var array
      */
-    private array $movies;
-
-    public function __construct()
-    {
-    }
+    private array $movies = [];
 
     public function getIterator(): Traversable
     {

@@ -20,7 +20,8 @@ class Routes
             ->post("/register", [RegisterController::class, "register"]);
 
         $router->get("/movies", [MovieController::class, "index"])
-        ->post("/movies/list/update",[MovieController::class,"update"]);
+            ->post("/movies/update", [MovieController::class, "update"])
+            ->get("/movies/search", [MovieController::class, "search"]);
 
         $router->resolve($_SERVER["REQUEST_URI"], strtolower($_SERVER["REQUEST_METHOD"]));
     }

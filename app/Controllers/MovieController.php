@@ -47,4 +47,23 @@ class MovieController
 
         $this->response->json($movies->getMovies());
     }
+
+    /**
+     * Search movies based on category, title and year range
+     * @return void
+     * @throws \Exceptions\ReadFileException
+     */
+    public function search(): void
+    {
+        $params = $this->request->getRequest();
+
+        $movies = $this->movieService->searchMovies(
+            $params->category ?? null,
+            $params->title ?? null,
+            $params->yearFrom ?? null,
+            $params->yearUntil ?? null,
+        );
+
+        $this->response->json($movies->getMovies());
+    }
 }
