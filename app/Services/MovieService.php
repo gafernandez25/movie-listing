@@ -95,6 +95,54 @@ class MovieService
         return $filteredMovieCollection;
     }
 
+
+    /**
+     * Sort a movie collection with parameter and sort direction received for each parameter
+     *
+     * Direction has to be 1 for ASC and 0 for DESC
+     * @param array $sortParams [param => 1|0, param => 1|0]
+     * @return MovieCollection
+     */
+    public function sort(MovieCollection $movies, array $sortParams): MovieCollection
+    {
+        $data = $movies->getMovies();
+
+        foreach ($data as $key => $movie) {
+            $title[$key] = $movie->getTitle();
+            $year[$key] = $movie->getYear();
+        }
+
+        $multiSort = [];
+        foreach ($sortParams as $name => $direction) {
+            $multiSort[] = [
+                "column" => ${$name},
+                "sort" => ($direction) ? SORT_ASC : SORT_DESC
+            ];
+        }
+
+        if (isset($multiSort[1])) { //two sort parameters
+            array_multisort(
+                $multiSort[0]["column"],
+                $multiSort[0]["sort"],
+                $multiSort[1]["column"],
+                $multiSort[1]["sort"],
+                $data
+            );
+        } else {    //one sort parameter
+            array_multisort(
+                $multiSort[0]["column"],
+                $multiSort[0]["sort"],
+                $data
+            );
+        }
+
+        return (new MovieCollection())->setMovies($data);
+    }
+
+    /** ****************************************************************************/
+    /** ****************************************************************************/
+    /** ****************************************************************************/
+
     /**
      * Builds Collection with associative array
      * @param array $movies
@@ -117,4 +165,5 @@ class MovieService
 
         return $movieCollection;
     }
+
 }

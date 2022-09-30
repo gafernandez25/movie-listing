@@ -39,4 +39,16 @@ class MovieCollection implements \IteratorAggregate
     {
         return $this->movies;
     }
+
+    /**
+     * @param array $movies
+     */
+    public function setMovies(array $movies): self
+    {
+        $this->movies = $movies;
+
+        return $this;
+    }
+
+
 }

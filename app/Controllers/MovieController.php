@@ -57,12 +57,22 @@ class MovieController
     {
         $params = $this->request->getRequest();
 
+        //search
         $movies = $this->movieService->searchMovies(
             $params->category ?? null,
             $params->title ?? null,
             $params->yearFrom ?? null,
             $params->yearUntil ?? null,
         );
+
+        //sort
+        if (!empty($params->sort)) {
+            $sortParamArray = explode("-", $params->sort);
+            for ($i = 0; $i < count($sortParamArray); $i = $i + 2) {
+                $sortParams[$sortParamArray[$i]] = $sortParamArray[$i + 1];
+            }
+            $movies = $this->movieService->sort($movies, $sortParams);
+        }
 
         $this->response->json($movies->getMovies());
     }

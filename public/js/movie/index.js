@@ -27,8 +27,14 @@ function search() {
     let yearUntil = document.getElementById("yearUntilSearch").value;
     let category = document.getElementById("categorySearch").value;
 
+    let sortParam1 = document.getElementById("sortParam1").value;
+    let sortDir1 = document.getElementById("sortDir1").value;
+    let sortParam2 = document.getElementById("sortParam2").value;
+    let sortDir2 = document.getElementById("sortDir2").value;
+
     var url = '/movies/search';
     var params = 'title=' + title + '&yearFrom=' + yearFrom + '&yearUntil=' + yearUntil + '&category=' + category;
+    params += '&sort=' + sortParam1 + '-' + sortDir1 + '-' + sortParam2 + '-' + sortDir2;
 
     var http = new XMLHttpRequest();
     http.open('GET', url + "?" + params, true);

@@ -30,19 +30,49 @@ require_once dirname(__DIR__, 1) . "/layouts/header.php";
                         </div>
                     </div>
                     <div class="row mt-5">
-                        <input hidden id="categorySearch" />
-                        <div class="col-md-4">
+                        <input hidden id="categorySearch"/>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Title</label>
                                 <input class="form-control" id="titleSearch" placeholder="Title"/>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Date range</label>
                                 <div class="input-group">
                                     <input class="form-control" id="yearFromSearch" placeholder="YYYY"/>
                                     <input class="form-control" id="yearUntilSearch" placeholder="YYYY"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Sort</label>
+                                <div class="input-group">
+                                    <select id="sortParam1" class="form-control">
+                                        <option value="title">Title</option>
+                                        <option value="year">Year</option>
+                                    </select>
+                                    <select id="sortDir1" class="form-control">
+                                        <option value="1">Asc</option>
+                                        <option value="0">Desc</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Sort</label>
+                                <div class="input-group">
+                                    <select id="sortParam2" class="form-control">
+                                        <option value="title">Title</option>
+                                        <option value="year">Year</option>
+                                    </select>
+                                    <select id="sortDir2" class="form-control">
+                                        <option value="1">Asc</option>
+                                        <option value="0">Desc</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
