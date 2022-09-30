@@ -67,3 +67,5 @@ chmod -R 755 storage
 1) Open browser and enter to the url defined in container creation
 
 > e.g. https://localhost:{{secure_port}}
+
+2) Register as user, login and use
