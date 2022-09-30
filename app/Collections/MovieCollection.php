@@ -3,8 +3,6 @@
 namespace App\Collections;
 
 use App\Entities\Movie;
-use Exception;
-use JetBrains\PhpStorm\Internal\TentativeType;
 use Traversable;
 
 class MovieCollection implements \IteratorAggregate

@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Interfaces\UserRepositoryInterface;
-use Exception;
-use Exceptions\WriteFileException;
 
 class RegisterService
 {

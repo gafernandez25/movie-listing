@@ -20,6 +20,7 @@ class MovieService
     /**
      * Updates movie list in storage
      * @param string $category
+     * @return MovieCollection
      * @throws \App\Exceptions\ApiReadException
      * @throws \Exceptions\WriteFileException
      */

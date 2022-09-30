@@ -3,8 +3,6 @@
 namespace App\Collections;
 
 use App\Entities\User;
-use Exception;
-use JetBrains\PhpStorm\Internal\TentativeType;
 use Traversable;
 
 class UserCollection implements \IteratorAggregate
