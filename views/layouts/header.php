@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Image formatter</title>
+    <title>Movie list</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -16,6 +16,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="/public/dist/css/adminlte.min.css">
     <!-- Page specific css -->
+    <style rel="stylesheet" href="/public/css/movie/index.css"></style>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -33,21 +35,18 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="" class="brand-link">
-            <span class="brand-text font-weight-light">Images</span>
+            <span class="brand-text font-weight-light">Movie list</span>
         </a>
-
         <!-- Sidebar -->
         <div class="sidebar">
-
-
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item">
-                        <a href="/" class="nav-link">
-                            <i class="nav-icon far fa-envelope"></i>
-                            <p>Images</p>
+                        <a href="/movies" class="nav-link">
+                            <i class="nav-icon fa fa-film"></i>
+                            <p>Movies</p>
                         </a>
                     </li>
                 </ul>

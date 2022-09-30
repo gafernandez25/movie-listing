@@ -3,6 +3,7 @@
 namespace Router;
 
 use App\Controllers\AuthController;
+use App\Controllers\MovieController;
 use App\Controllers\RegisterController;
 use App\Factories\RouterFactory;
 
@@ -17,6 +18,9 @@ class Routes
             ->get("/logout", [AuthController::class, "logout"])
             ->get("/register", [RegisterController::class, "index"])
             ->post("/register", [RegisterController::class, "register"]);
+
+        $router->get("/movies", [MovieController::class, "index"])
+        ->post("/movies/list/update",[MovieController::class,"update"]);
 
         $router->resolve($_SERVER["REQUEST_URI"], strtolower($_SERVER["REQUEST_METHOD"]));
     }

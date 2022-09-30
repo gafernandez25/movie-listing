@@ -2,6 +2,6 @@
 
 return [
     'App\Interfaces\*RepositoryInterface' => DI\autowire('App\Repositories\*JsonRepository'),
-    'App\Interfaces\*DTOInterface' => DI\autowire('App\DTOs\*JsonDTO'),
-//    'App\Interfaces\DBPdoInterface' => DI\autowire("App\DBPdo"),
+    'App\Interfaces\UserDTOInterface' => DI\autowire('App\DTOs\UserJsonDTO'),
+    'App\Interfaces\ApiDTOInterface' => DI\autowire('App\DTOs\ApiOmdbDTO'),
 ];
