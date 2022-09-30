@@ -42,6 +42,13 @@ class PasswordValidator extends ParameterValidator
         return false;
     }
 
+    /**
+     * Validates the exact length of the value
+     * @param mixed $inputValue
+     * @param string|null $ruleValues
+     * @param array $errorMessages
+     * @return bool
+     */
     public function length(mixed $inputValue, ?string $ruleValues, array &$errorMessages): bool
     {
         $length = $ruleValues;
@@ -52,6 +59,13 @@ class PasswordValidator extends ParameterValidator
         return false;
     }
 
+    /**
+     * Validates that a value has a specific amount of uppercase letters
+     * @param mixed $inputValue
+     * @param string|null $ruleValues
+     * @param array $errorMessages
+     * @return bool
+     */
     public function uppercase(mixed $inputValue, ?string $ruleValues, array &$errorMessages): bool
     {
         list($minQuantity, $maxQuantity) = explode("|", $ruleValues);
@@ -62,6 +76,13 @@ class PasswordValidator extends ParameterValidator
         return false;
     }
 
+    /**
+     * Validates that a value has specific special characters
+     * @param mixed $inputValue
+     * @param string|null $ruleValues
+     * @param array $errorMessages
+     * @return bool
+     */
     public function specialCharacters(mixed $inputValue, ?string $ruleValues, array &$errorMessages): bool
     {
         $characters = explode("|", $ruleValues);
@@ -72,6 +93,13 @@ class PasswordValidator extends ParameterValidator
         return false;
     }
 
+    /**
+     * Validates that a value is equal to another one
+     * @param mixed $inputValue
+     * @param string|null $ruleValues
+     * @param array $errorMessages
+     * @return bool
+     */
     public function equalTo(mixed $inputValue, ?string $ruleValues, array &$errorMessages): bool
     {
         $retypePass = $ruleValues;

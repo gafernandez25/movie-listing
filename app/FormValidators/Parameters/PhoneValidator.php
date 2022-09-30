@@ -16,7 +16,6 @@ class PhoneValidator extends ParameterValidator
         parent::__construct();
     }
 
-
     /**
      * Validate that parameter is not empty
      *
@@ -39,6 +38,13 @@ class PhoneValidator extends ParameterValidator
         return false;
     }
 
+    /**
+     * Validates that value start with plus sign followed by numbers
+     * @param mixed $inputValue
+     * @param string|null $ruleValues
+     * @param array $errorMessages
+     * @return bool
+     */
     public function plusNumeric(mixed $inputValue, ?string $ruleValues, array &$errorMessages): bool
     {
         if ($this->plusNumericRule->validate($inputValue)) {
@@ -48,6 +54,13 @@ class PhoneValidator extends ParameterValidator
         return false;
     }
 
+    /**
+     * Validates the exact length of the value
+     * @param mixed $inputValue
+     * @param string|null $ruleValues
+     * @param array $errorMessages
+     * @return bool
+     */
     public function length(mixed $inputValue, ?string $ruleValues, array &$errorMessages): bool
     {
         $length = $ruleValues;

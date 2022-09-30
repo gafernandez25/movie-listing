@@ -39,6 +39,13 @@ class EmailValidator extends ParameterValidator
         return false;
     }
 
+    /**
+     * Validates that a value has a valid email format
+     * @param $inputValue
+     * @param string|null $ruleValues
+     * @param array $errorMessages
+     * @return bool
+     */
     public function email($inputValue, ?string $ruleValues, array &$errorMessages): bool
     {
         if ($this->emailRule->validate($inputValue)) {
