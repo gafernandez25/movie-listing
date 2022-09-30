@@ -21,6 +21,8 @@ class Redirect
     public function back(array $errorMessages = []): void
     {
         $_SESSION["inputParams"] = (array)($this->request->getRequest());
+        unset($_SESSION["inputParams"]["password"]);
+        unset($_SESSION["inputParams"]["retype_password"]);
         $_SESSION["errorMessages"] = $errorMessages;
         header("location: " . $_SERVER["HTTP_REFERER"]);
     }
