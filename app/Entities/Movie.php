@@ -2,8 +2,6 @@
 
 namespace App\Entities;
 
-use JetBrains\PhpStorm\Internal\TentativeType;
-
 class Movie implements \JsonSerializable
 {
     public function __construct(

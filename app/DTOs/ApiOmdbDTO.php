@@ -11,7 +11,7 @@ class ApiOmdbDTO implements ApiDTOInterface
 {
     /**
      * Change format of a movie
-     * @param object $sourceData
+     * @param array $sourceData
      * @return object
      */
     public function parseMovie(array $sourceData): object

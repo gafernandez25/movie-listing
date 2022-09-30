@@ -24,6 +24,8 @@ class UserJsonRepository implements UserRepositoryInterface
      * Creates a new user
      * @param object $userData
      * @return void
+     * @throws ReadFileException
+     * @throws WriteFileException
      */
     public function register(object $userData): void
     {

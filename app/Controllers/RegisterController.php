@@ -27,7 +27,7 @@ class RegisterController
      */
     public function index()
     {
-        return View::make("auth/register")->render();
+        View::make("auth/register")->render();
     }
 
     public function register()

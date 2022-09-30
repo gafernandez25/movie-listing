@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Interfaces\UserRepositoryInterface;
+use Exception;
+use Exceptions\WriteFileException;
 
 class RegisterService
 {
@@ -12,6 +14,11 @@ class RegisterService
     ) {
     }
 
+    /**
+     * Registers new user
+     * @param object $userData
+     * @return void
+     */
     public function registerUser(object $userData): void
     {
         $userData->password = $this->passwordService->hashPassword($userData->password);

@@ -9,6 +9,11 @@ use App\Interfaces\UserDTOInterface;
  */
 class UserJsonDTO implements UserDTOInterface
 {
+    /**
+     * Change format of user data
+     * @param array $sourceData
+     * @return object
+     */
     public function parseUser(array $sourceData): object
     {
         $obj = new \stdClass();

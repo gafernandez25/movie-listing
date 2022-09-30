@@ -42,6 +42,7 @@ class MovieCollection implements \IteratorAggregate
 
     /**
      * @param array $movies
+     * @return MovieCollection
      */
     public function setMovies(array $movies): self
     {
