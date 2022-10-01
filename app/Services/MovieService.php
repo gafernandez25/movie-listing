@@ -7,13 +7,17 @@ use App\Collections\MovieCollection;
 use App\Entities\Movie;
 use App\Interfaces\ApiDTOInterface;
 use App\Interfaces\MovieRepositoryInterface;
+use App\Sorters\MoviesSortable;
+use App\Sorters\SortMovies1Param;
+use App\Sorters\SortMovies2Param;
 
 class MovieService
 {
     public function __construct(
         private ApiOmdb $api,
         private ApiDTOInterface $apiDTO,
-        private MovieRepositoryInterface $movieRepository
+        private MovieRepositoryInterface $movieRepository,
+        private MoviesSortable $moviesSortable
     ) {
     }
 
@@ -48,17 +52,6 @@ class MovieService
         $this->movieRepository->saveCollection($movieCollection, $category);
 
         return $movieCollection;
-    }
-
-    /**
-     * Gets movies from a category from storage
-     * @param string $category
-     * @return MovieCollection
-     * @throws \Exceptions\ReadFileException
-     */
-    public function getCategoryMovies(string $category): MovieCollection
-    {
-        return $this->buildCollection($this->movieRepository->getCategoryMovies($category));
     }
 
     /**
@@ -101,14 +94,24 @@ class MovieService
      * Sort a movie collection with parameter and sort direction received for each parameter
      *
      * Direction has to be 1 for ASC and 0 for DESC
-     * @param array $sortParams [param => 1|0, param => 1|0]
-     * @return MovieCollection
+     * @param MovieCollection $movies Collection to be sorted
+     * @param string $sortInputParams param1-dir1-param2-dir2-...
+     * @return MovieCollection  Sorted collection
      */
-    public function sort(MovieCollection $movies, array $sortParams): MovieCollection
+    public function sort(MovieCollection $movies, string $sortInputParams): MovieCollection
     {
-        $data = $movies->getMovies();
+        //Build an array with parameters and sort direction
+        //[param1 => 1|0, param2 => 1|0, ...]
+        $sortParamArray = explode("-", $sortInputParams);
 
-        foreach ($data as $key => $movie) {
+        for ($i = 0; $i < count($sortParamArray); $i = $i + 2) {
+            if (!isset($sortParams[$sortParamArray[$i]])) {  //avoid usage of repeated parameters
+                $sortParams[$sortParamArray[$i]] = $sortParamArray[$i + 1];
+            }
+        }
+
+        //build array with columns that could be needed to use to sort movies
+        foreach ($movies as $key => $movie) {
             $title[$key] = $movie->getTitle();
             $year[$key] = $movie->getYear();
         }
@@ -121,21 +124,8 @@ class MovieService
             ];
         }
 
-        if (isset($multiSort[1])) { //two sort parameters
-            array_multisort(
-                $multiSort[0]["column"],
-                $multiSort[0]["sort"],
-                $multiSort[1]["column"],
-                $multiSort[1]["sort"],
-                $data
-            );
-        } else {    //one sort parameter
-            array_multisort(
-                $multiSort[0]["column"],
-                $multiSort[0]["sort"],
-                $data
-            );
-        }
+        $data = ($this->moviesSortable->getInstance(count($multiSort)))
+            ->sort($movies->getMovies(), $multiSort);
 
         return (new MovieCollection())->setMovies($data);
     }

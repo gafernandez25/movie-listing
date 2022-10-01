@@ -67,13 +67,7 @@ class MovieController
 
         //sort
         if (!empty($params->sort)) {
-            $sortParamArray = explode("-", $params->sort);
-            for ($i = 0; $i < count($sortParamArray); $i = $i + 2) {
-                if(!isset($sortParams[$sortParamArray[$i]])) {
-                    $sortParams[$sortParamArray[$i]] = $sortParamArray[$i + 1];
-                }
-            }
-            $movies = $this->movieService->sort($movies, $sortParams);
+            $movies = $this->movieService->sort($movies, $params->sort);
         }
 
         $this->response->json($movies->getMovies());
