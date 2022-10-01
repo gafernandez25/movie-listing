@@ -70,3 +70,23 @@ chmod -R 755 storage
 > e.g. https://localhost:{{secure_port}}
 
 2) Register as user, login and use
+
+## Testing
+
+1) Enter to the container.
+
+``` sh
+docker exec -ti {{container_name}} bash
+```
+
+2) Move to html location.
+
+``` sh
+cd /var/www/html
+```
+
+3) Run tests
+
+``` sh
+./vendor/bin/phpunit
+```
