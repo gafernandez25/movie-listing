@@ -8,3 +8,5 @@ use Router\Routes;
 define('VIEW_PATH', __DIR__ . "/views");
 
 (new Routes())->set();
+
+
