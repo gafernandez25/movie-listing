@@ -7,7 +7,7 @@ require_once dirname(__DIR__, 1) . "/layouts/header.php";
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>MovieS</h1>
+                    <h1>Movies</h1>
                 </div>
             </div>
         </div>
