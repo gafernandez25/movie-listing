@@ -1,5 +1,7 @@
 function updateMovieList() {
     
+    
+    
     let category = document.getElementById("categoryInput").value;
 
     if (category == "") {
