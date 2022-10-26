@@ -25,7 +25,7 @@ pipeline {
                 success {
                      script {
                         buildSuccessful = true
-                        test = 2
+                        test = 200
                      }
                 }
             }
@@ -76,8 +76,17 @@ pipeline {
         }
         always{
             sh 'echo yo me ejecuto siempre'
-            sh 'echo ${test}'
-            
+            sh 'echo test = ${test}'
+            sh 'echo ${buildSuccessful}'
+            script{
+                if(buildSuccessful == true){
+                    sh '''
+                    echo buildSuccessful = true
+                    docker container stop movie_listing-test
+                    docker container rm movie_listing-test
+                    '''
+                }
+            }
         }
     }
 }
