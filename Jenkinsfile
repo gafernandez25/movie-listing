@@ -21,9 +21,9 @@ pipeline {
             steps {
                 sh '''
                     echo Building...
-                    docker exec -ti -u jenkins movie_listing-test composer install
-                    docker exec -ti movie_listing-test /bin/chown -R www-data:www-data /var/www/html/storage
-                    docker exec -ti movie_listing-test /bin/chmod -R 755 /var/www/html/storage
+                    docker exec -u jenkins movie_listing-test composer install
+                    docker exec movie_listing-test /bin/chown -R www-data:www-data /var/www/html/storage
+                    docker exec movie_listing-test /bin/chmod -R 755 /var/www/html/storage
                 '''
             }
         }
