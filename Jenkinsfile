@@ -23,7 +23,9 @@ pipeline {
             }
             post {
                 success {
+                    sh 'echo build success'
                      script {
+                     sh 'echo script en build success'
                         buildSuccessful = true
                         test = 200
                      }
