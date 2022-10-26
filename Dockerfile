@@ -5,10 +5,12 @@ ENV TZ=Europe/Berlin
 
 RUN apt-get -y update && apt-get -y upgrade \
 	&& \
-	apt-get -y install apache2 ufw curl vim git zip unzip openssl mysql-client \
+	apt-get -y install apache2 ufw curl vim git zip unzip openssl mysql-client openssh-server\
 	&& \
 	ufw allow 'Apache' \
 	&& \
+    ufw allow 'ssh' \
+    && \
 	a2enmod ssl rewrite \
 	&& \
 	apt install lsb-release ca-certificates apt-transport-https software-properties-common -y \
@@ -27,6 +29,20 @@ COPY apache2.conf /etc/apache2/apache2.conf
 
 RUN a2ensite default-ssl.conf
 
-EXPOSE 80 443
+RUN useradd jenkins \
+    && \
+    echo "jenkins:1234" | chpasswd \
+    && \
+    mkdir /home/jenkins/.ssh -p \
+    && \
+    chmod 700 /home/jenkins/.ssh \
+    && \
+    mkdir -p -m0755 /var/run/sshd \
+    && \
+    chown jenkins:jenkins -R /home/jenkins
+
+RUN service ssh start
+
+EXPOSE 80 443 22
 
 CMD apachectl -DFOREGROUND
