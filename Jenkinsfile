@@ -11,13 +11,6 @@ pipeline {
 
         stage('Create test container') {
             steps {
-                try {
-                    sh '''
-                        docker container stop movie_listing-test
-                        docker container rm movie_listing-test
-                    '''
-                } catch (Exception e) {}
-
                 sh '''
                     docker run -d --name movie_listing-test\
                     -v /home/guille/dockers/jenkins/volumes/home/workspace/movie_listing-pipeline-push_github:/var/www/html \
@@ -60,6 +53,15 @@ pipeline {
                 localhost:${dockerRegistryPort}/movie_listing-prod:v${BUILD_NUMBER}
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            sh '''
+                docker container stop movie_listing-test
+                docker container rm movie_listing-test
+            '''
         }
     }
 }
