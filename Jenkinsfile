@@ -39,9 +39,9 @@ pipeline {
         stage('Push') {
             steps {
                 sh '''
-                docker commit movie_listing-test movie_listing-prod:v${BUILD_NUMBER}
-                docker tag movie_listing-prod:v${BUILD_NUMBER} localhost:${dockerRegistryPort}/movie_listing-prod:v${BUILD_NUMBER}
-                docker push localhost:${dockerRegistryPort}/movie_listing-prod:v${BUILD_NUMBER}
+                docker commit movie_listing-test movie_listing-prod:${BUILD_NUMBER}
+                docker tag movie_listing-prod:${BUILD_NUMBER} localhost:${dockerRegistryPort}/movie_listing-prod:${BUILD_NUMBER}
+                docker push localhost:${dockerRegistryPort}/movie_listing-prod:${BUILD_NUMBER}
                 '''
             }
         }
@@ -50,18 +50,11 @@ pipeline {
             steps {
                 sh '''
                 docker run -d --name movie_listing-prod -p 4362:443 -p 862:80 --network dockers_guille \
-                localhost:${dockerRegistryPort}/movie_listing-prod:v${BUILD_NUMBER}
+                localhost:${dockerRegistryPort}/movie_listing-prod:${BUILD_NUMBER}
                 '''
             }
         }
     }
 
-    post {
-        always {
-            sh '''
-                docker container stop movie_listing-test
-                docker container rm movie_listing-test
-            '''
-        }
-    }
+
 }
