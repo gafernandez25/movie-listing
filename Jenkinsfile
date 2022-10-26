@@ -22,8 +22,6 @@ pipeline {
                 sh '''
                     echo Building...
                     docker exec -u jenkins movie_listing-test composer install
-                    docker exec movie_listing-test /bin/chown -R www-data:www-data /var/www/html/storage
-                    docker exec movie_listing-test /bin/chmod -R 755 /var/www/html/storage
                 '''
             }
         }
@@ -32,7 +30,7 @@ pipeline {
             steps {
                 sh '''
                     echo Testing...
-                    ll
+                    docker exec -u jenkins movie_listing-test ./vendor/bin/phpunit
                 '''
             }
         }
