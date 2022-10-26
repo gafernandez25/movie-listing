@@ -13,7 +13,6 @@ pipeline {
         stage('Create test container') {
             steps {
                 sh '''
-                    echo ${test}
                     echo Creating Test Container...
                     docker run -d --name movie_listing-test\
                     -v /home/guille/dockers/jenkins/volumes/home/workspace/movie_listing-pipeline-push_github:/var/www/html \
@@ -49,16 +48,14 @@ pipeline {
                     docker exec -u jenkins movie_listing-test ./vendor/bin/phpunit
                 '''
             }
-             post {
-                failure {
-                    sh 'echo Fallóóóóóóóóóó LPM'
-                }
-             }
         }
 
         stage('Push') {
             steps {
-                sh 'echo Pushing image to Dockerhub...'
+                sh '''
+                echo Pushing image to Registry...
+                docker commit movie_listing-test movie_listing-test
+                '''
             }
         }
 
