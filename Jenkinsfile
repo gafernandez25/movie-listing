@@ -62,5 +62,12 @@ pipeline {
         }
     }
 
-
+    post {
+        always{
+            sh '''
+                docker container stop movie_listing-test
+                docker container rm movie_listing-test
+            '''
+        }
+    }
 }
