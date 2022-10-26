@@ -37,7 +37,7 @@ pipeline {
                 failure {
                     sh 'echo Fallóóóóóóóóóó LPM'
                 }
-            }
+             }
         }
 
         stage('Push') {
@@ -51,5 +51,17 @@ pipeline {
                 sh 'echo Deploying image in Prod...'
             }
         }
+
+        post {
+            failure {
+                sh 'echo Fallóóóóóóóóóó LPM'
+            }
+            success {
+                sh 'echo Andó, vamos carajo LPM'
+            }
+            always{
+                sh 'echo yo me ejecuto siempre'
+            }
+         }
     }
 }
