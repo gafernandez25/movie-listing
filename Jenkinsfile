@@ -15,7 +15,7 @@ pipeline {
                 sh '''
                     echo ${test}
                     echo Creating Test Container...
-                    docker run -d --name movie_listing-test\
+                    docker run -d--namemovie_listing-test\
                     -v /home/guille/dockers/jenkins/volumes/home/workspace/movie_listing-pipeline-push_github:/var/www/html \
                     -w /var/www/html \
                     movie_listing
@@ -24,6 +24,7 @@ pipeline {
             post {
                 success {
                      script {
+                        buildSuccessful = true
                         test = 2
                      }
                 }
@@ -77,7 +78,7 @@ pipeline {
             sh 'echo yo me ejecuto siempre'
             sh 'echo ${test}'
             script{
-                if(!buildSuccessful){
+                if(buildSuccessful){
                     sh '''
                     docker container stop movie_listing-test
                     docker container rm movie_listing-test
