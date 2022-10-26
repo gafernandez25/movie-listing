@@ -54,7 +54,7 @@ pipeline {
             steps {
                 sh '''
                 echo Pushing image to Registry...
-                docker commit movie_listing-test movie_listing-test
+                docker commit movie_listing-test movie_listing-test:${BUILD_NUMBER}
                 '''
             }
         }
