@@ -28,6 +28,8 @@ pipeline {
                 sh '''
                     docker exec -u jenkins movie_listing-test cp -R /tmp/source_code/. /var/www/html
                     docker exec -u jenkins movie_listing-test composer install
+                    docker exec -u jenkins movie_listing-test /bin/chown -R www-data:www-data /var/www/html/storage
+                    docker exec -u jenkins movie_listing-test /bin/chmod -R 755 /var/www/html/storage
                 '''
             }
         }
