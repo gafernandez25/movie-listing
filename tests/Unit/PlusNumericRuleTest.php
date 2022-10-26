@@ -24,8 +24,8 @@ class PlusNumericRuleTest extends TestCase
 
     public function testPatterWithPlusSignNotAtTheBeggining()
     {
-//        $this->assertFalse((new PlusNumericRule())->validate("123+45"));
-        $this->assertTrue((new PlusNumericRule())->validate("123+45"));
+        $this->assertFalse((new PlusNumericRule())->validate("123+45"));
+//        $this->assertTrue((new PlusNumericRule())->validate("123+45"));
         $this->assertFalse((new PlusNumericRule())->validate("12345+"));
         $this->assertFalse((new PlusNumericRule())->validate("+12345+"));
     }
