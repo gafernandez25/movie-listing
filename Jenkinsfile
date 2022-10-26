@@ -16,6 +16,9 @@ pipeline {
                     -v /home/guille/dockers/jenkins/volumes/home/workspace/movie_listing-pipeline-push_github:/tmp/source_code \
                     -w /var/www/html \
                     localhost:${dockerRegistryPort}/movie_listing
+
+                    docker exec movie_listing-test rm -f index.html
+                    docker exec movie_listing-test /bin/chown -R jenkins:jenkins /var/www/html
                 '''
             }
         }
@@ -23,7 +26,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    docker exec -u jenkins movie_listing-test cp -R /tmp/source_code /var/www/html
+                    docker exec -u jenkins movie_listing-test cp -R /tmp/source_code/ /var/www/html
                     docker exec -u jenkins movie_listing-test composer install
                 '''
             }
