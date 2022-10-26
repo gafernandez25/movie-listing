@@ -5,10 +5,10 @@ pipeline {
 
     stages {
 
-        stage('Build') {
+        stage('Create test container') {
             steps {
                 sh '''
-                    echo Building...
+                    echo Creating Test Container...
                     docker run -d --name movie_listing-test\
                     -v /home/guille/dockers/jenkins/volumes/home/workspace/movie_listing-pipeline-push_github:/var/www/html \
                     -w /var/www/html \
@@ -17,9 +17,23 @@ pipeline {
             }
         }
 
+        stage('Build') {
+            steps {
+                sh '''
+                    echo Building...
+                    composer install
+                    sudo /bin/chown -R www-data:www-data /var/www/html/storage
+                    sudo /bin/chmod -R 755 /var/www/html/storage
+                '''
+            }
+        }
+
         stage('Test') {
             steps {
-                sh 'echo Testing...'
+                sh '''
+                    echo Testing...
+                    ll
+                ''' 
             }
         }
 
