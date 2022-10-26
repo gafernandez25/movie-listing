@@ -15,10 +15,10 @@ pipeline {
                 sh '''
                     echo ${test}
                     echo Creating Test Container...
-                    docker run -d--namemovie_listing-test\
+                    docker run -d --name movie_listing-test\
                     -v /home/guille/dockers/jenkins/volumes/home/workspace/movie_listing-pipeline-push_github:/var/www/html \
                     -w /var/www/html \
-                    movie_listing
+                    localhost:5000/movie_listing
                 '''
             }
             post {
