@@ -1,0 +1,23 @@
+version: '3'
+services:
+  dev:
+    container_name: movie_listing-dev
+    ports:
+      - "4361:443"
+      - "861:80"
+    image: movie_listing
+    volumes:
+      - /home/guille/dockers/movie_listing/volumes/webserver:/var/www/html
+  test:
+    container_name: movie_listing-test
+    ports:
+      - "4362:443"
+      - "862:80"
+    image: movie_listing
+    volumes:
+      - /home/guille/dockers/movie_listing/volumes/ssh/jenkins_rsa.pub:/home/jenkins/.ssh/authorized_keys
+      - /home/guille/dockers/movie_listing/volumes/sudoers/jenkins:/etc/sudoers.d/jenkins
+networks:
+  default:
+    name: dockers_guille
+    external: true
