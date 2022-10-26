@@ -5,6 +5,7 @@ pipeline {
 
     environment {
         buildSuccessful = false
+        test = 1
     }
 
     stages {
@@ -12,6 +13,7 @@ pipeline {
         stage('Create test container') {
             steps {
                 sh '''
+                    echo ${test}
                     echo Creating Test Container...
                     docker run -d --name movie_listing-test\
                     -v /home/guille/dockers/jenkins/volumes/home/workspace/movie_listing-pipeline-push_github:/var/www/html \
@@ -23,6 +25,7 @@ pipeline {
                 success {
                      script {
                         buildSuccessful = true
+                        test = 2
                      }
                 }
             }
@@ -73,8 +76,9 @@ pipeline {
         }
         always{
             sh 'echo yo me ejecuto siempre'
+            sh 'echo ${test}'
             script{
-                if(${buildSuccessful}){
+                if(buildSuccessful){
                     sh '''
                     docker container stop movie_listing-test
                     docker container rm movie_listing-test
