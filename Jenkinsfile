@@ -33,6 +33,11 @@ pipeline {
                     docker exec -u jenkins movie_listing-test ./vendor/bin/phpunit
                 '''
             }
+             post {
+                failure {
+                    sh 'echo Fallóóóóóóóóóó LPM'
+                }
+            }
         }
 
         stage('Push') {
