@@ -26,7 +26,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    docker exec -u jenkins movie_listing-test cp -R /tmp/source_code/ /var/www/html
+                    docker exec -u jenkins movie_listing-test cp -R /tmp/source_code/* /var/www/html/
                     docker exec -u jenkins movie_listing-test composer install
                 '''
             }
