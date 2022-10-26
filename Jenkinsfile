@@ -24,7 +24,6 @@ pipeline {
             post {
                 success {
                      script {
-                        buildSuccessful = true
                         test = 2
                      }
                 }
