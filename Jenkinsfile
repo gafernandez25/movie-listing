@@ -4,6 +4,7 @@ pipeline {
     agent any
 
     environment {
+        dockerRegistryPort = 5000
         buildSuccessful = false
         test = 1
     }
@@ -17,7 +18,7 @@ pipeline {
                     docker run -d --name movie_listing-test\
                     -v /home/guille/dockers/jenkins/volumes/home/workspace/movie_listing-pipeline-push_github:/var/www/html \
                     -w /var/www/html \
-                    localhost:5000/movie_listing
+                    localhost:${dockerRegistryPort}/movie_listing
                 '''
             }
             post {
@@ -54,7 +55,9 @@ pipeline {
             steps {
                 sh '''
                 echo Pushing image to Registry...
-                docker commit movie_listing-test movie_listing-test:${BUILD_NUMBER}
+                docker commit movie_listing-test movie_listing-prod:v${BUILD_NUMBER}
+                docker tag movie_listing-prod:v${BUILD_NUMBER} localhost:${dockerRegistryPort}/movie_listing-prod:v${BUILD_NUMBER}
+                docker push localhost:${dockerRegistryPort}/movie_listing-prod:v${BUILD_NUMBER}
                 '''
             }
         }
