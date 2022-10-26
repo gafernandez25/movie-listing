@@ -78,7 +78,7 @@ pipeline {
             sh 'echo yo me ejecuto siempre'
             sh 'echo ${test}'
             script{
-                if(buildSuccessful){
+                if(!buildSuccessful){
                     sh '''
                     docker container stop movie_listing-test
                     docker container rm movie_listing-test
