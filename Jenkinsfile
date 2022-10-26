@@ -3,6 +3,10 @@ properties([pipelineTriggers([githubPush()])])
 pipeline {
     agent any
 
+    environment {
+        buildSuccessful = false
+    }
+
     stages {
 
         stage('Create test container') {
@@ -14,6 +18,13 @@ pipeline {
                     -w /var/www/html \
                     movie_listing
                 '''
+            }
+            post {
+                success {
+                     script {
+                        buildSuccessful = true
+                     }
+                }
             }
         }
 
@@ -62,6 +73,14 @@ pipeline {
         }
         always{
             sh 'echo yo me ejecuto siempre'
+            script{
+                if(${buildSuccessful}){
+                    sh '''
+                    docker container stop movie_listing-test
+                    docker container rm movie_listing-test
+                    '''
+                }
+            }
         }
     }
 }
