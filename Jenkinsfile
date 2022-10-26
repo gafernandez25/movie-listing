@@ -7,6 +7,11 @@ pipeline {
             steps {
                 sh '''
                     echo Building...
+                    docker run \
+                    -v /var/jenkins_home/workspace/movie_listing-pipeline-push_github:/var/www/html \
+                    -w /var/www/html \
+                    --name movie_listing-test \
+                    registry/movie_listing
                 '''
             }
         }
