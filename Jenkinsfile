@@ -8,7 +8,7 @@ pipeline {
                 sh '''
                     echo Building...
                     docker run -d --name movie_listing-test\
-                    -v /var/jenkins_home/workspace/movie_listing-pipeline-push_github:/var/www/html \
+                    -v /home/guille/dockers/jenkins/volumes/home/workspace/movie_listing-pipeline-push_github:/var/www/html \
                     -w /var/www/html \
                     movie_listing
                 '''
