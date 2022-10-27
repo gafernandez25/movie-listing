@@ -7,7 +7,7 @@ services:
       - "861:80"
     image: localhost:5000/movie_listing
     volumes:
-      - /home/guille/dockers/movie_listing/volumes/webserver:/var/www/html
+      - /home/guille/dockers/movie_listing/volumes/dev:/var/www/html
 networks:
   default:
     name: dockers_guille
