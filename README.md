@@ -1,4 +1,4 @@
-# Installationnn
+# Installation
 
 ## Creating test environment
 
