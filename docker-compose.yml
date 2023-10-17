@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  webserver:
+    container_name: movie-listing-webserver
+    restart: always
+    image: 'nginx:alpine'
+    ports:
+      - "8005:80"
+    networks:
+      - movie-listing-network
+    volumes:
+      - './docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
+      - '.:/application'
+
+  app:
+    container_name: movie-listing-app
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/php-fpm/Dockerfile
+      target: development
+    volumes:
+      - '.:/application'
+    working_dir: /application
+    networks:
+      - movie-listing-network
+
+networks:
+  movie-listing-network:
