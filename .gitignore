@@ -2,4 +2,3 @@
 .idea
 .env
 .phpunit.result.cache
-storage/json_repository/**
