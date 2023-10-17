@@ -15,11 +15,10 @@ services:
   app:
     container_name: movie-listing-app
     restart: always
-#    build:
-#      context: .
-#      dockerfile: docker/php-fpm/Dockerfile
-#      target: development
-    image: php:8.2-fpm-alpine
+    build:
+      context: .
+      dockerfile: docker/php-fpm/Dockerfile
+      target: development
     volumes:
       - '.:/application'
     working_dir: /application
