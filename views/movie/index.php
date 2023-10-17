@@ -99,7 +99,7 @@ require_once dirname(__DIR__, 1) . "/layouts/header.php";
         </div>
     </section>
 </div>
-<script src="/public/js/movie/index.js"></script>
+<script src="/js/movie/index.js"></script>
 <?php
 
 require_once dirname(__DIR__, 1) . "/layouts/footer.php";
