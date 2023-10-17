@@ -8,3 +8,7 @@ RUN echo 'alias ll="ls -al"' >> ~/.bashrc
 
 # get composer using multi-stage build
 COPY --from=composer:2.4 /usr/bin/composer /usr/bin/composer
+
+COPY . .
+
+RUN chown www-data:www-data storage/json_repository/
