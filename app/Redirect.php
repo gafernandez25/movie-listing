@@ -15,10 +15,12 @@ class Redirect
         $_SESSION['inputParams'] = $inputs;
         $_SESSION['errorMessages'] = $errorMessages;
         header(sprintf('location: %s', $_SERVER['HTTP_REFERER']));
+        die;
     }
 
     public function route(string $route): void
     {
         header(sprintf('Location: %s', $route));
+        die;
     }
 }

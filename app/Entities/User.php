@@ -10,42 +10,28 @@ namespace App\Entities;
 class User
 {
     public function __construct(
-        private string $username,
-        private string $phone,
-        private string $email,
-        private string $password
+        public readonly string $username,
+        public readonly string $phone,
+        public readonly string $email,
+        public readonly string $password
     ) {
     }
 
     /**
-     * @return string
+     * @return array{
+     *      username: string,
+     *      phone: string,
+     *      email: string,
+     *      password: string
+     * }
      */
-    public function getUsername(): string
+    public function toArray(): array
     {
-        return $this->username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPhone(): string
-    {
-        return $this->phone;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
+        return [
+            'username' => $this->username,
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'password' => $this->password
+        ];
     }
 }

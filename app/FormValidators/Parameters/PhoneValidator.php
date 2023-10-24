@@ -66,7 +66,7 @@ class PhoneValidator extends ParameterValidator
     public function length(mixed $inputValue, ?string $ruleValues, array &$errorMessages): bool
     {
         $length = $ruleValues;
-        if ($this->lengthRule->validate(ltrim($inputValue, "+"), $length)) {
+        if ($this->lengthRule->validate(ltrim($inputValue, "+"), (int)$length)) {
             return true;
         }
         $errorMessages[] = "Phone must have $length digits";

@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Interfaces;
 
+use App\Entities\User;
+
 interface UserRepositoryInterface
 {
-    /**
-     * Creates a new user
-     * @param object $userData
-     * @return void
-     */
-    public function register(object $userData): void;
+    public function register(User $user): void;
 
     /**
      * Get list of users

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\FormValidators;
 
 use App\FormValidators\Parameters\EmailValidator;
@@ -9,6 +11,7 @@ use App\FormValidators\Parameters\UsernameValidator;
 use App\Redirect;
 use App\Request;
 use App\Services\UserService;
+use App\ValueObjects\RegisterRequest;
 
 /**
  * Validates received parameters in register action
@@ -16,8 +19,6 @@ use App\Services\UserService;
 class RegisterValidator
 {
     public function __construct(
-        private Request $request,
-        private Redirect $redirect,
         private EmailValidator $emailValidator,
         private PasswordValidator $passwordValidator,
         private PhoneValidator $phoneValidator,
@@ -27,54 +28,34 @@ class RegisterValidator
     }
 
     /**
-     * Validates request data
-     *
-     * Returns data object if success or redirects back with parameters if input error/s
-     * @return object
+     * @return string[]
      */
-    public function validate(): object
+    public function validate(RegisterRequest $request): array
     {
-        $params = $this->request->getRequest();
-
         $errorMessages = [];
 
-        $validation = true;
-
         $rules = ["required", "only_letters"];
-        if (!$this->usernameValidator->validate($params->username, $rules, $errorMessages)) {
-            $validation = false;
-        }
-        if ($this->userService->existsUsername($params->username)) {
+        $this->usernameValidator->validate($request->username, $rules, $errorMessages);
+
+        if ($this->userService->existsUsername($request->username)) {
             $errorMessages[] = "Username is already used";
-            $validation = false;
         }
 
         $rules = ["required", "email"];
-        if (!$this->emailValidator->validate($params->email, $rules, $errorMessages)) {
-            $validation = false;
-        }
+        $this->emailValidator->validate($request->email, $rules, $errorMessages);
 
         $rules = ["required", "plus_numeric", "length:9"];
-        if (!$this->phoneValidator->validate($params->phone, $rules, $errorMessages)) {
-            $validation = false;
-        }
+        $this->phoneValidator->validate($request->phone, $rules, $errorMessages);
 
         $rules = [
             "required",
             "length:6",
             "uppercase:1|1",
             "special_characters:*|-|.",
-            "equal_to:" . $params->retype_password
+            "equal_to:" . $request->retypePassword
         ];
-        if (!$this->passwordValidator->validate($params->password, $rules, $errorMessages)) {
-            $validation = false;
-        }
+        $this->passwordValidator->validate($request->password, $rules, $errorMessages);
 
-        if (!$validation) {
-            $this->redirect->back($errorMessages);
-            die;
-        }
-
-        return $params;
+        return $errorMessages;
     }
 }

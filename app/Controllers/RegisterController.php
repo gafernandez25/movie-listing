@@ -1,47 +1,59 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers;
 
+use App\DTOs\RegisterRequestDTO;
+use App\Entities\User;
 use App\FormValidators\RegisterValidator;
+use App\Interfaces\UserRepositoryInterface;
 use App\Redirect;
-use App\Services\RegisterService;
+use App\Services\PasswordService;
+use App\Services\UserService;
 use App\View;
-use Exception;
 
-/**
- * Class used for register new user
- */
 class RegisterController
 {
     public function __construct(
         private RegisterValidator $registerValidator,
-        private RegisterService $registerService,
-        private Redirect $redirect
+        private UserRepositoryInterface $userRepository,
+        private Redirect $redirect,
+        private RegisterRequestDTO $registerRequestDTO,
+        private PasswordService $passwordService
     ) {
     }
 
-    /**
-     * Loads register view
-     * @return void
-     * @throws Exception
-     */
-    public function index()
+    public function view(): void
     {
-        View::make("auth/register")->render();
+        View::make('auth/register')->render();
     }
 
-    public function register()
+    public function register(): void
     {
-        $validatedData = $this->registerValidator->validate();
+        $request = $this->registerRequestDTO->getRequest();
 
-        $obj = new \stdClass();
-        $obj->username = $validatedData->username;
-        $obj->phone = $validatedData->phone;
-        $obj->email = $validatedData->email;
-        $obj->password = $validatedData->password;
+        $errorMessages = $this->registerValidator->validate($request);
+        if (!empty($errorMessages)) {
+            $this->redirect->backWithInput(
+                [
+                    'username' => $request->username,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                ],
+                $errorMessages
+            );
+        }
 
-        $this->registerService->registerUser($obj);
+        $user = new User(
+            username: $request->username,
+            phone: $request->phone,
+            email: $request->email,
+            password: $this->passwordService->hashPassword($request->password),
+        );
 
-        $this->redirect->route("/login");
+        $this->userRepository->register($user);
+
+        $this->redirect->route('/login');
     }
 }

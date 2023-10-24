@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Entities\User;
 use App\Interfaces\UserDTOInterface;
 use App\Interfaces\UserRepositoryInterface;
 use Exception;
@@ -23,13 +24,10 @@ class UserJsonRepository implements UserRepositoryInterface
     }
 
     /**
-     * Creates a new user
-     * @param object $userData
-     * @return void
      * @throws ReadFileException
      * @throws WriteFileException
      */
-    public function register(object $userData): void
+    public function register(User $user): void
     {
         try {
             if (file_exists($this->fileName)) {
@@ -40,7 +38,7 @@ class UserJsonRepository implements UserRepositoryInterface
         } catch (Exception) {
             throw new ReadFileException();
         }
-        $current_data[] = $userData;
+        $current_data[] = $user->toArray();
 
         try {
             file_put_contents($this->fileName, json_encode($current_data));
