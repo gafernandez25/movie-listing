@@ -2,7 +2,7 @@ version: '3.8'
 services:
   webserver:
     container_name: movie-listing-webserver
-    restart: always
+    restart: on-failure
     image: 'nginx:alpine'
     ports:
       - "8005:80"
@@ -14,16 +14,22 @@ services:
 
   app:
     container_name: movie-listing-app
-    restart: always
+    restart: on-failure
     build:
       context: .
       dockerfile: docker/php-fpm/Dockerfile
       target: development
     volumes:
       - '.:/application'
+      - './docker/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini'
     working_dir: /application
     networks:
       - movie-listing-network
+    environment:
+      XDEBUG_MODE: 'debug,coverage'
+    extra_hosts:
+      # Ensure that host.docker.internal is correctly defined on Linux
+      - host.docker.internal:host-gateway
 
 networks:
   movie-listing-network:
