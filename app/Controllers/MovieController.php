@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers;
 
 use App\Redirect;
@@ -7,7 +9,6 @@ use App\Request;
 use App\Response;
 use App\Services\MovieService;
 use App\View;
-use Exception;
 
 class MovieController
 {
@@ -23,12 +24,7 @@ class MovieController
         }
     }
 
-    /**
-     * Main view of movie list
-     * @return void
-     * @throws Exception
-     */
-    public function index(): void
+    public function view(): void
     {
         View::make("movie/index")->render();
     }
