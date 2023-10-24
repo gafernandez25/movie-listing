@@ -20,7 +20,6 @@ class LoginRequestDTO
         return new LoginRequest(
             (string)$params['username'],
             (string)$params['password'],
-            (string)$params['g-recaptcha-response'],
         );
     }
 }
