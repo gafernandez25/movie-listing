@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Interfaces;
 /**
  * Adapter class to change source format to desired format
