@@ -10,7 +10,6 @@ use App\FormValidators\RegisterValidator;
 use App\Interfaces\UserRepositoryInterface;
 use App\Redirect;
 use App\Services\PasswordService;
-use App\Services\UserService;
 use App\View;
 
 class RegisterController
