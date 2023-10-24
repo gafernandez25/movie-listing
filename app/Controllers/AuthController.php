@@ -1,46 +1,66 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers;
 
+use App\DTOs\LoginRequestDTO;
 use App\FormValidators\LoginValidator;
 use App\Redirect;
 use App\Services\AuthService;
 use App\View;
-use Exception;
+use Exceptions\AuthenticationException;
 
 class AuthController
 {
     public function __construct(
-        private LoginValidator $loginValidator,
-        private AuthService $authService,
-        private Redirect $redirect
+        private readonly LoginValidator $loginValidator,
+        private readonly AuthService $authService,
+        private readonly Redirect $redirect,
+        private readonly LoginRequestDTO $loginRequestDTO,
     ) {
     }
 
-    /**
-     * Load login view
-     * @return void
-     * @throws Exception
-     */
-    public function index()
+    public function view(): void
     {
-        return View::make("auth/login")->render();
+        View::make('auth/login')->render();
     }
 
-    public function login()
+    public function login(): void
     {
-        $validatedData = $this->loginValidator->validate();
+        $request = $this->loginRequestDTO->getRequest();
 
-        $user = $this->authService->authenticate($validatedData->username, $validatedData->password);
+        $errorMessages = $this->loginValidator->validate($request);
+        if (!empty($errorMessages)) {
+            $this->redirect->backWithInput(
+                [
+                    'username' => $request->username
+                ],
+                $errorMessages
+            );
+        }
 
-        $_SESSION["loggedUser"] = $user->getUsername();
+        try {
+            $user = $this->authService->authenticate($request->username, $request->password);
+        } catch (AuthenticationException $exception) {
+            $errorMessages[] = $exception->getMessage();
+            $this->redirect->backWithInput(
+                [
+                    'username' => $request->username
+                ],
+                $errorMessages
+            );
+        }
 
-        $this->redirect->route("/movies");
+        $_SESSION['loggedUser'] = $user->getUsername();
+
+        $this->redirect->route('/movies');
     }
 
-    public function logout()
+    public function logout(): void
     {
         session_destroy();
-        $this->redirect->route("/login");
+
+        $this->redirect->route('/login');
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\FormValidators\Rules;
 
 /**
@@ -14,6 +16,12 @@ class EmailRule
      */
     public function validate(string $inputValue): bool
     {
-        return preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $inputValue);
+        $result = preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $inputValue);
+
+        if ($result === false) {
+            throw new \Exception;
+        }
+
+        return boolval($result);
     }
 }

@@ -1,32 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
-/**
- * Creates an object with all REQUEST params received
- */
 class Request
 {
-    /** Request parameters */
-    private object $params;
-
-    public function __construct()
+    /**
+     * Parameter names are the keys of the array
+     * @return array<string,mixed>
+     */
+    public function getRequest(): array
     {
-        $this->params = new \stdClass();
+        $params = [];
 
         foreach ($_REQUEST as $key => $value) {
-            $this->params->$key = $value;
+            $params[$key] = $value;
         }
-    }
 
-    /**
-     * Returns parameters received as an object
-     *
-     * Parameter names are the keys inside the object
-     * @return object
-     */
-    public function getRequest(): object
-    {
-        return $this->params;
+        return $params;
     }
 }

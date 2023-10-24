@@ -3,7 +3,8 @@
     "psr-4": {
       "App\\": "app/",
       "Router\\": "router/",
-      "Exceptions\\": "exceptions/"
+      "Exceptions\\": "exceptions/",
+      "Tests\\": "tests/"
     }
   },
   "require-dev": {

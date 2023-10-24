@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\FormValidators\Rules;
 
 /**
@@ -7,14 +9,14 @@ namespace App\FormValidators\Rules;
  */
 class LengthRule
 {
-    /**
-     * Returns true if it is valid or false if it is invalid
-     * @param string $inputValue
-     * @param int $length
-     * @return bool
-     */
     public function validate(string $inputValue, int $length): bool
     {
-        return preg_match('/.{' . $length . '}$/', $inputValue);
+        $result = preg_match('/.{' . $length . '}$/', $inputValue);
+
+        if ($result === false) {
+            throw new \Exception;
+        }
+
+        return boolval($result);
     }
 }

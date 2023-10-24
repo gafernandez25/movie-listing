@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\FormValidators\Rules;
 
 /**
@@ -7,15 +9,14 @@ namespace App\FormValidators\Rules;
  */
 class UppercaseRule
 {
-    /**
-     * Returns true if it is valid or false if it is invalid
-     * @param string $inputValue
-     * @param int $minQuantity
-     * @param int $maxQuantity
-     * @return bool
-     */
     public function validate(string $inputValue, int $minQuantity, int $maxQuantity): bool
     {
-        return preg_match("/[A-Z]{" . $minQuantity . "," . $maxQuantity . "}/", $inputValue);
+        $result = preg_match("/[A-Z]{" . $minQuantity . "," . $maxQuantity . "}/", $inputValue);
+
+        if ($result === false) {
+            throw new \Exception;
+        }
+
+        return boolval($result);
     }
 }

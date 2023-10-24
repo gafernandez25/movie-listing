@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\FormValidators\Parameters;
 
 use App\FormValidators\Rules\EqualToRule;
@@ -52,7 +54,7 @@ class PasswordValidator extends ParameterValidator
     public function length(mixed $inputValue, ?string $ruleValues, array &$errorMessages): bool
     {
         $length = $ruleValues;
-        if ($this->lengthRule->validate($inputValue, $length)) {
+        if ($this->lengthRule->validate($inputValue, (int)$length)) {
             return true;
         }
         $errorMessages[] = "Password must have $length digits";
@@ -69,7 +71,7 @@ class PasswordValidator extends ParameterValidator
     public function uppercase(mixed $inputValue, ?string $ruleValues, array &$errorMessages): bool
     {
         list($minQuantity, $maxQuantity) = explode("|", $ruleValues);
-        if ($this->uppercaseRule->validate($inputValue, $minQuantity, $maxQuantity)) {
+        if ($this->uppercaseRule->validate($inputValue, (int)$minQuantity, (int)$maxQuantity)) {
             return true;
         }
         $errorMessages[] = "Password must have between $minQuantity and $maxQuantity uppercase letters";

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\FormValidators\Parameters;
 
 use App\FormValidators\Rules\EmailRule;

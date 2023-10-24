@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\FormValidators\Parameters;
 
 abstract class ParameterValidator
@@ -41,13 +43,17 @@ abstract class ParameterValidator
         array &$errorMessages
     ): bool {
         $result = true;
+
         foreach ($rules as $ruleString) {
             $ruleArray = explode(":", $ruleString);
+
             $ruleValues = $ruleArray[1] ?? null;
+
             if (!$this->{$this->rules[$ruleArray[0]]}($inputValue, $ruleValues, $errorMessages)) {
                 $result = false;
             }
         }
+
         return $result;
     }
 }

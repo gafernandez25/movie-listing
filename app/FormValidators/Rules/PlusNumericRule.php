@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\FormValidators\Rules;
 
 /**
@@ -14,6 +16,12 @@ class PlusNumericRule
      */
     public function validate(string $inputValue): bool
     {
-        return preg_match("/^\+(\d+)$/", $inputValue);
+        $result = preg_match("/^\+(\d+)$/", $inputValue);
+
+        if ($result === false) {
+            throw new \Exception;
+        }
+
+        return boolval($result);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\FormValidators\Rules;
 
 /**
@@ -7,13 +9,14 @@ namespace App\FormValidators\Rules;
  */
 class OnlyLettersRule
 {
-    /**
-     * Returns true if it is valid or false if it is invalid
-     * @param string $inputValue
-     * @return bool
-     */
     public function validate(string $inputValue): bool
     {
-        return !preg_match("/[^a-zA-Z]/", $inputValue);
+        $result = preg_match("/[^a-zA-Z]/", $inputValue);
+
+        if ($result === false) {
+            throw new \Exception;
+        }
+
+        return !$result;
     }
 }

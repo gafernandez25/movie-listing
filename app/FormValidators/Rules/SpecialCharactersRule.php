@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\FormValidators\Rules;
 
 /**
@@ -13,12 +15,6 @@ class SpecialCharactersRule
      */
     private array $reservedCharacters = ["*", ".", "-", "?", "{", "}"];
 
-    /**
-     * Returns true if it is valid or false if it is invalid
-     * @param string $inputValue
-     * @param array $characters Array of characters wanted in value
-     * @return bool
-     */
     public function validate(string $inputValue, array $characters): bool
     {
         $pattern = "/";
@@ -28,6 +24,13 @@ class SpecialCharactersRule
         }
         $pattern .= "]";
         $pattern .= "/";
-        return preg_match($pattern, $inputValue);
+
+        $result = preg_match($pattern, $inputValue);
+
+        if ($result === false) {
+            throw new \Exception;
+        }
+
+        return boolval($result);
     }
 }
