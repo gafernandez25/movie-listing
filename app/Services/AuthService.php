@@ -25,7 +25,7 @@ class AuthService
             throw new UserNotFoundException('Username does not exist');
         }
 
-        if ($this->passwordService->isPasswordValid($user->getPassword(), $password) === false) {
+        if ($this->passwordService->isPasswordValid($user->password, $password) === false) {
             throw new InvalidPasswordException('Password does not match username\'s password');
         }
 

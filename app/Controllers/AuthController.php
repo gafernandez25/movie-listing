@@ -52,7 +52,7 @@ class AuthController
             );
         }
 
-        $_SESSION['loggedUser'] = $user->getUsername();
+        $_SESSION['loggedUser'] = $user->username;
 
         $this->redirect->route('/movies');
     }
